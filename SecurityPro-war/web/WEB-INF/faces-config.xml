@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<faces-config version="2.2"
+              xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
+    
+    <application>
+        <locale-config>
+            <default-locale>fr</default-locale>
+            <supported-locale>en</supported-locale>
+        </locale-config>
+        
+        <resource-bundle>
+            <base-name>controllers.language</base-name>
+            <var>lm</var>
+        </resource-bundle>
+    </application>
+    
+    <managed-bean>
+        <managed-bean-name>sessionController</managed-bean-name>
+        <managed-bean-class>controllers.SessionController</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>utilisateurController</managed-bean-name>
+        <managed-bean-class>controllers.UtilisateurController</managed-bean-class>
+        <managed-bean-scope>view</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>privilegesController</managed-bean-name>
+        <managed-bean-class>controllers.PrivilegesController</managed-bean-class>
+        <managed-bean-scope>view</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>operationsController</managed-bean-name>
+        <managed-bean-class>controllers.OperationsController</managed-bean-class>
+        <managed-bean-scope>view</managed-bean-scope>
+    </managed-bean>
+</faces-config>

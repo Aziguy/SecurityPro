@@ -1,0 +1,138 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{sessionController.watchOut()}" />
+    </f:metadata>  
+
+    <body>
+
+        <ui:composition template="./index.xhtml">
+
+            <ui:define name="content">
+                <h:form id="form">
+                    <center>
+                        <h:outputText id="msg" value="#{utilisateurController.msg}" style="color: green;" />
+                    </center>
+                    <p:separator />
+                    <h1><h:outputText value="Liste des utilisateurs"/></h1>
+                    <p:dataTable selectionMode="single" selection="#{utilisateurController.utilisateur}" rowKey="#{item.idutilisateur}" id="table" value="#{utilisateurController.listUtilisateur}" var="item">
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Nom"/>
+                            </f:facet>
+                            <h:outputText value="#{item.nom}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Prénom"/>
+                            </f:facet>
+                            <h:outputText value="#{item.prenom}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Date de naissance"/>
+                            </f:facet>
+                            <h:outputText value="#{item.datenais}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Lieu de naissance"/>
+                            </f:facet>
+                            <h:outputText value="#{item.lieunais}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Sexe"/>
+                            </f:facet>
+                            <h:outputText value="#{item.sexe}"/>
+                        </p:column>
+                        <!--<p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Photo"/>
+                            </f:facet>
+                            <h:outputText value="#{item.photo}"/>
+                        </p:column>-->
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Login"/>
+                            </f:facet>
+                            <h:outputText value="#{item.login}"/>
+                        </p:column>
+                    </p:dataTable>
+
+                    <p:separator />
+                        <h:panelGrid style="margin: auto;" columns="7">
+                            <p:commandButton widgetVar="add" partialSubmit="true" actionListener="#{utilisateurController.prepareCreate}" update=":form_tr:fm_utilisateur,msg" oncomplete="PF('wv_utilisateur').show()" value="Ajouter"/>
+                            <p:commandButton widgetVar="modify" actionListener="#{utilisateurController.action}" update=":form_tr:fm_utilisateur,msg" partialSubmit="true" oncomplete="PF('wv_utilisateur').show()" value="Modifier"/>
+                            <p:commandButton widgetVar="delete" actionListener="#{utilisateurController.action}" update=":form_tr:fm_utilisateur,msg" partialSubmit="true" oncomplete="PF('wv_utilisateur').show()" value="Supprimer"/>
+                            <p:commandButton widgetVar="consult" actionListener="#{utilisateurController.action}" update=":form_tr:fm_utilisateur,msg" partialSubmit="true" oncomplete="PF('wv_utilisateur').show()" value="Consulter"/>
+                            <p:commandButton widgetVar="print" action="#{utilisateurController.imprimer()}" immediate="true" ajax="false" value="Imprimer"/>
+                            <p:commandButton widgetVar="refresh" actionListener="#{utilisateurController.init()}" update="table,msg" partialSubmit="true" value="Rafraichir"/>
+                            <p:commandButton widgetVar="close" action="index.xhtml?faces-redirect=true" immediate="true" value="Fermer"/>
+                        </h:panelGrid>
+
+                </h:form>
+
+                <h:form id="form_tr">
+                    <p:dialog id="fm_utilisateur" widgetVar="wv_utilisateur">
+                        <f:facet name="header">
+                            <h:outputText value="Ajouter/Editer un utilisateur"/>
+                        </f:facet>
+                        <h:panelGrid id="inputs" columns="3">
+                            <p:outputLabel value="Nom:" for="nom" />
+                            <p:inputText disabled="#{utilisateurController.operation.equals('delete') or utilisateurController.operation.equals('consult')}" required="true" requiredMessage="Valeur obligatoire" id="nom" value="#{utilisateurController.utilisateur.nom}" title="Nom" />
+                            <p:message for="nom" />
+
+                            <p:outputLabel value="Prénom:" for="prenom" />
+                            <p:inputText disabled="#{utilisateurController.operation.equals('delete') or utilisateurController.operation.equals('consult')}" id="prenom" value="#{utilisateurController.utilisateur.prenom}" title="Prénom" />
+                            <p:message for="prenom" />
+
+                            <p:outputLabel value="Date de naissance:" for="datenais" />
+                            <p:calendar disabled="#{utilisateurController.operation.equals('delete') or utilisateurController.operation.equals('consult')}" showOn="button" id="datenais" value="#{utilisateurController.utilisateur.datenais}" title="Date de naissance" >
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </p:calendar>
+                            <p:message for="datenais" />
+
+                            <p:outputLabel value="Lieu de naissance:" for="lieunais" />
+                            <p:inputText disabled="#{utilisateurController.operation.equals('delete') or utilisateurController.operation.equals('consult')}" id="lieunais" value="#{utilisateurController.utilisateur.lieunais}" title="Lieu de naissance" />
+                            <p:message for="lieunais" />
+
+                            <p:outputLabel value="Sexe:" for="sexe" />
+                            <p:selectOneMenu disabled="#{utilisateurController.operation.equals('delete') or utilisateurController.operation.equals('consult')}" required="true" requiredMessage="Valeur obligatoire" id="sexe" value="#{utilisateurController.utilisateur.sexe}">
+                                <f:selectItem itemLabel="" itemValue="" />
+                                <f:selectItem itemLabel="Féminin" itemValue="Féminin" />
+                                <f:selectItem itemLabel="Masculin" itemValue="Masculin" />
+                            </p:selectOneMenu>
+                            <p:message for="sexe" />
+
+                            <p:outputLabel value="Login:" for="login" />
+                            <p:inputText disabled="#{utilisateurController.operation.equals('delete') or utilisateurController.operation.equals('consult')}" required="true" requiredMessage="Valeur obligatoire" id="login" value="#{utilisateurController.utilisateur.login}" title="Login" />
+                            <p:message for="login" />
+
+                            <p:outputLabel value="Mot de passe:" for="mdp" />
+                            <p:password disabled="#{utilisateurController.operation.equals('delete') or utilisateurController.operation.equals('consult')}" feedback="true" required="true" requiredMessage="Valeur obligatoire" id="mdp" value="#{utilisateurController.utilisateur.mdp}" title="Mot de passe" />
+                            <p:message for="mdp" />
+
+                        </h:panelGrid>
+                        <f:facet name="footer">
+                            <center>
+                                <p:commandButton rendered="#{!utilisateurController.operation.equals('consult')}" actionListener="#{utilisateurController.persist()}" update="inputs,:form:table,:form:msg" value="Enregistrer" />
+                            </center>
+                        </f:facet>
+                    </p:dialog>
+                </h:form>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

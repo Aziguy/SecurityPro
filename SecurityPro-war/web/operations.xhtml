@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./index.xhtml">
+
+            <ui:define name="content">
+                <h:form>
+                    <h1><h:outputText value="Liste des opérations"/></h1>
+                    <p:dataTable scrollable="true" scrollHeight="300" id="table" value="#{operationsController.listOperations}" var="item">
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Nom"/>
+                            </f:facet>
+                            <h:outputText value="#{item.nom}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Cible"/>
+                            </f:facet>
+                            <h:outputText value="#{item.cible}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Date"/>
+                            </f:facet>
+                            <h:outputText value="#{item.date}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Heure"/>
+                            </f:facet>
+                            <h:outputText value="#{item.heure}">
+                                <f:convertDateTime pattern="HH:mm:ss" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Adresse IP"/>
+                            </f:facet>
+                            <h:outputText value="#{item.adresseip}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Utilisateur"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idutilisateur.nom} #{item.idutilisateur.prenom}"/>
+                        </p:column>
+                    </p:dataTable>
+                    <p:separator />
+                    <h:panelGrid style="margin: auto;" columns="7">
+                        <p:commandButton partialSubmit="true" actionListener="#{operationsController.deleteAll()}" update="table" value="Vider la liste"/>
+                        <p:commandButton action="index.xhtml?faces-redirect=true" immediate="true" value="Fermer" />
+                    </h:panelGrid>
+
+                </h:form>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

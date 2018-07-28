@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link href="./resources/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./resources/css/cssLayout.css" rel="stylesheet" type="text/css" />
+        <title>SecurityPro</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <p:fieldset style="font-size: 10pt; font-weight: bold; font-style: italic; margin: auto; margin-top: 13%; width: 30%;">
+                <f:facet name="legend">
+                    <h:outputText style="font-size: 20pt;" value="?" />
+                </f:facet>
+
+                <p:panel style="width: 100%; text-align: center;" id="form_con">
+                    <f:facet name="header">
+                        <h:outputText style="font-size: 12pt;" value="Authentification" />
+                    </f:facet>
+
+                    <h:panelGrid style="text-align: justify;" columns="3">
+                        <p:outputLabel value="Login:" for="login" />
+                        <p:inputText style="font-size: 10pt; font-weight: normal; font-style: italic" id="login" value="#{sessionController.currentUser.login}" title="Login" size="30" required="true" requiredMessage="Valeur obligatoire!" />
+                        <p:message for="login" />
+
+                        <p:outputLabel value="Mot de passe:" for="mdp" />
+                        <p:inputText style="font-size: 10pt; font-weight: normal; font-style: italic;" type="password" id="mdp" value="#{sessionController.currentUser.mdp}" title="Mot de passe" size="30" required="true" requiredMessage="Valeur obligatoire!" />
+                        <p:message for="mdp" />             
+                    </h:panelGrid>
+
+                    <f:facet name="footer">  
+                        <h:panelGrid style="width: 100%;" columns="1">
+                            <p:commandButton id="ok" value="#{lm.Connexion}" action="#{sessionController.authenticate()}" update="form_con" />
+                        </h:panelGrid>
+                    </f:facet>
+                </p:panel>
+
+            </p:fieldset>
+            <center>
+                <h:outputText id="msg" value="#{sessionController.msg}" style="color: red" />
+            </center>
+            <p:defaultCommand target="ok" />
+        </h:form>
+    </h:body>
+</html>
+
